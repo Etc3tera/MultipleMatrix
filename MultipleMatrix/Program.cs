@@ -30,7 +30,7 @@ namespace MultipleMatrix
                 sw = Stopwatch.StartNew();
                 double[,] R2 = Matrix.MatrixMulParallel(A, B, new int[] { MATSIZE, MATSIZE }, new int[] { MATSIZE, MATSIZE });
                 sw.Stop();
-                Console.WriteLine("10 Tasks     : {0} ms.", sw.ElapsedMilliseconds);
+                Console.WriteLine("4 Tasks     : {0} ms.", sw.ElapsedMilliseconds);
 
                 for (int i = 0; i < MATSIZE; i++)
                 {
