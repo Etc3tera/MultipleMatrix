@@ -11,7 +11,7 @@ namespace MultipleMatrix
     {
         static void Main(string[] args)
         {
-            int[] testsize = new int[]{ 100, 250, 500, 1000 };
+            int[] testsize = new int[]{ 100, 500, 1000 };
 
             for (int round = 0; round < testsize.Length; round++)
             {

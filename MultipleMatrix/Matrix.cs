@@ -13,16 +13,28 @@ namespace MultipleMatrix
             if(sizeA[1] != sizeB[0])
                 return null;
             double[,] matAns = new double[sizeA[0], sizeB[1]];
+            double[,] tempB = new double[sizeB[1], sizeB[0]];
+            
+            // transpose B
+            for (int i = 0; i < sizeB[0]; i++)
+            {
+                for (int j = 0; j < sizeB[1]; j++)
+                {
+                    tempB[j, i] = matB[i, j];
+                }
+            }
 
+            double temp = 0;
             for (int i = 0; i < sizeA[0]; i++)
             {
                 for (int j = 0; j < sizeB[1]; j++)
                 {
-                    matAns[i, j] = 0;
+                    temp = 0;
                     for (int k = 0; k < sizeA[1]; k++)
                     {
-                        matAns[i, j] += matA[i, k] * matB[k, j];
+                        temp += matA[i, k] * tempB[j, k];
                     }
+                    matAns[i, j] = temp;
                 }
             }
 
@@ -31,16 +43,16 @@ namespace MultipleMatrix
 
         public static double[,] MatrixMulParallel(double[,] matA, double[,] matB, int[] sizeA, int[] sizeB)
         {
-            Task[] tsk = new Task[10];
+            Task[] tsk = new Task[4];
             double[,] matAns = new double[sizeA[0], sizeB[1]];
 
-            for (int _i = 0; _i < 10; _i++)
+            for (int _i = 0; _i < 4; _i++)
             {
                 int i = _i;
                 tsk[i] = Task.Factory.StartNew(() =>
                 {
-                    int count = sizeA[0] / 10;
-                    int startRow = sizeA[0] / 10 * i;
+                    int count = sizeA[0] / 4;
+                    int startRow = sizeA[0] / 4 * i;
                     double[,] piece = splitMul(matA, matB, startRow, sizeB[1], sizeB[0],count);
 
                     for (int row = startRow, k = 0; row < startRow + count; row++, k++)
